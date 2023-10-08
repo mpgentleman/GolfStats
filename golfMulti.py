@@ -51,7 +51,7 @@ import pytz
 def FullDisplay(df):
     with pd.option_context('display.max_rows',10,'display.max_columns',None):
         display(df)
-from sklearn.cluster import KMeans
+#from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 import numpy as np
 import matplotlib.pyplot as plt
