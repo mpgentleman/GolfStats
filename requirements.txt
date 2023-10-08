@@ -28,7 +28,7 @@ kenpompy==0.2.1
 marshmallow==3.14.1
 matplotlib==3.5.0
 MechanicalSoup==0.12.0
-numpy==1.22.4
+numpy==1.23.2
 oauth2client==4.1.3
 #opencv-python==4.4.0.44
 openpyxl==3.0.5
