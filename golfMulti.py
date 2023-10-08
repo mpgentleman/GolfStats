@@ -38,7 +38,7 @@ from IPython.core.display import display, HTML
 display(HTML("<style>.container { width:100% !important; }</style>"))
 from datetime import datetime
 from pytz import timezone
-import schedule
+#import schedule
 import time
 from datetime import datetime, timedelta
 from threading import Timer
