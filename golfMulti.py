@@ -837,7 +837,79 @@ def vertical_mean_line_survived2(x, **kwargs):
 from matplotlib.backends.backend_agg import RendererAgg
 _lock = RendererAgg.lock
 
+def _displayShotData(uploaded_file):
+    df = pd.read_csv(uploaded_file)
+    df = df.drop(df.index[0])
+    club_selected = list(df['Club Type'].unique())
+    option = st.selectbox('Which Club?',club_selected)
+    df=df[df['Club Type']==option]
+    convert_column_names = ['Total Distance','Total Lateral Distance']
+    colsM=['Club Speed','Ball Speed','Carry Distance','Total Distance',
+                   'Roll Distance','Smash','Vertical Launch','Peak Height',
+                   'Descent Angle','Horizontal Launch','Carry Lateral Distance',
+                   'Total Lateral Distance','Carry Curve Distance','Total Curve Distance',
+                   'Attack Angle','Dynamic Loft','Spin Loft','Spin Rate','Spin Axis',
+                   'Club Path','Face Path','Face Target'
+               ]
+    df = convert_columns_to_float(df, colsM)
+    st.write('You selected:', option)
+    text_input = st.number_input("Enter yardage 👇",) 
+    # Display the modified data
 
+    #col1, col2 = st.columns(2)
+    filename = df
+    club = club_selected
+    Pin_in_yards = text_input
+    st.subheader('Golf Metrics Dashboard')    
+    myData = Practice_Session(filename,club,Pin_in_yards)
+    team1 = myData._data
+    colsM=['Club Speed','Ball Speed','Carry Distance','Total Distance','Roll Distance',
+                   'Smash','Vertical Launch','Peak Height','Descent Angle',
+                   'Horizontal Launch','Carry Lateral Distance','Total Lateral Distance',
+                   'Carry Curve Distance','Total Curve Distance','Attack Angle','Dynamic Loft',
+                   'Spin Loft','Spin Rate','Spin Axis','Club Path','Face Path','Face Target',
+                   'Shot Classification','Feet_from_Pin','Strokes_Gained'
+                    ]
+    colsM2=['Club Speed','Ball Speed','Carry Distance','Total Distance','Roll Distance',
+                    'Smash','Vertical Launch','Peak Height','Descent Angle',
+                    'Horizontal Launch','Carry Lateral Distance','Total Lateral Distance','Carry Curve Distance',
+                    'Total Curve Distance','Attack Angle','Dynamic Loft',
+                    'Spin Loft','Spin Rate','Spin Axis','Club Path','Face Path','Face Target','Feet_from_Pin','Strokes_Gained'
+                     ]
+    numeric=['numericColumn','numberColumnFilter']
+    team2=team1[colsM]
+    team3=team1[colsM2]
+    colsDist=['Carry Distance','Total Distance','Roll Distance','Total Lateral Distance']
+    colsSpeed=['Club Speed','Ball Speed','Smash']
+    colsPath=['Spin Axis','Club Path','Face Path','Face Target']
+    colsSpin=['Vertical Launch','Peak Height','Descent Angle', 'Horizontal Launch',
+                      'Attack Angle','Dynamic Loft','Spin Loft','Spin Rate']
+    colsStrokes=['Feet_from_Pin','Strokes_Gained']
+    st.subheader('Distance Metrics')
+    get_Histogram_Facet(team3[colsDist])
+    st.subheader('Speed Metrics')
+    get_Histogram_Facet(team3[colsSpeed])
+    st.subheader('Club Path Metrics')
+    get_Histogram_Facet(team3[colsPath])
+    st.subheader('Spin Metrics')
+    get_Histogram_Facet(team3[colsSpin])
+    st.subheader('Green Metrics')
+    get_Histogram_Facet(team3[colsStrokes])
+    allcols=team2.columns
+    header1=option+' Shot Data'
+    st.subheader(header1)
+    csTotal=cellStyleDynamic(team1.Strokes_Gained)
+    gb = GridOptionsBuilder.from_dataframe(team2)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gridOptions = gb.build()
+    AgGrid(team2, gridOptions=gridOptions, enable_enterprise_modules=True,height=500,allow_unsafe_jscode=True)
+    IdealShot= pd.read_csv('IdealTrackman.csv')
+    #st.dataframe(IdealShot)
+    result = filter_row(IdealShot,'Club',option)
+    st.subheader(' Ideal Zones. Green is the range from this session')
+    plot_values(result)
 def get_Histogram_Facet(df):
     tall_df = df.melt(var_name='Measurement', value_name='Value')
     sns.set_theme()
@@ -867,12 +939,13 @@ if page == 'One Club':
         
         else:
             st.write('Please upload a file')
-        
+            uploaded_file1 = 'ag-shots-sample.csv'
+            _displayShotData(uploaded_file1)
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
-        import os
-        cwd = os.getcwd()
-        st.write(cwd)
+        #import os
+        #cwd = os.getcwd()
+        #st.write(cwd)
         # Drop the second row (index 1)
         df = df.drop(df.index[0])
         club_selected = list(df['Club Type'].unique())
@@ -889,15 +962,7 @@ if page == 'One Club':
         df = convert_columns_to_float(df, colsM)
         st.write('You selected:', option)
         text_input = st.number_input("Enter yardage 👇",) 
-    
-
         # Display the modified data
-
-
-
-                
-    
-
 
         #col1, col2 = st.columns(2)
         filename = df
@@ -906,9 +971,6 @@ if page == 'One Club':
         st.subheader('Golf Metrics Dashboard')    
         #with col1:
         myData = Practice_Session(filename,club,Pin_in_yards)
-     
-
-
     
         team1 = myData._data
         colsM=['Club Speed','Ball Speed','Carry Distance','Total Distance','Roll Distance',
