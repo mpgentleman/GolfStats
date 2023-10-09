@@ -514,8 +514,8 @@ class Practice_Session():
         self.calc_df()
         
     def calc_df(self):
-        shots_input = pd.read_csv('/Strokes_to_Hole.csv')
-        avg_strokes = pd.read_csv('/Avg_Strokes.csv')
+        shots_input = pd.read_csv('Strokes_to_Hole.csv')
+        avg_strokes = pd.read_csv('Avg_Strokes.csv')
         model, poly = create_model_poly(shots_input, 'Feet', 'Avg Shots',2)
         model2 = create_model(avg_strokes, 'Yards', 'Strokes_To_Hole')
         
