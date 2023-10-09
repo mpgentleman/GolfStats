@@ -514,8 +514,8 @@ class Practice_Session():
         self.calc_df()
         
     def calc_df(self):
-        shots_input = pd.read_csv('folder/Strokes_to_Hole.csv')
-        avg_strokes = pd.read_csv('folder/Avg_Strokes.csv')
+        shots_input = pd.read_csv('app/folder/Strokes_to_Hole.csv')
+        avg_strokes = pd.read_csv('app/folder/Avg_Strokes.csv')
         model, poly = create_model_poly(shots_input, 'Feet', 'Avg Shots',2)
         model2 = create_model(avg_strokes, 'Yards', 'Strokes_To_Hole')
         
@@ -627,8 +627,8 @@ class Practice_SessionMulti():
         self.calc_df()
         
     def calc_df(self):
-        shots_input = pd.read_csv('folder/Strokes_to_Hole.csv')
-        avg_strokes = pd.read_csv('folder/Avg_Strokes.csv')
+        shots_input = pd.read_csv('app/folder/Strokes_to_Hole.csv')
+        avg_strokes = pd.read_csv('app/folder/Avg_Strokes.csv')
         self.avg_distance = self._data['Total Distance'].mean()
         self.lateral_distance = self._data['Total Lateral Distance'].mean()
     def print_data(self):
@@ -952,7 +952,7 @@ if page == 'One Club':
         gridOptions = gb.build()
 
         AgGrid(team2, gridOptions=gridOptions, enable_enterprise_modules=True,height=500,allow_unsafe_jscode=True)
-        IdealShot= pd.read_csv('folder/IdealTrackman.csv')
+        IdealShot= pd.read_csv('app/folder/IdealTrackman.csv')
         #st.dataframe(IdealShot)
         result = filter_row(IdealShot,'Club',option)
         st.subheader(' Ideal Zones. Green is the range from this session')
