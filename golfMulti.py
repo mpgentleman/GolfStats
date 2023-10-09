@@ -868,6 +868,9 @@ if page == 'One Club':
         
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
+        import os
+        cwd = os.getcwd()
+        st.write(cwd)
         # Drop the second row (index 1)
         df = df.drop(df.index[0])
         club_selected = list(df['Club Type'].unique())
