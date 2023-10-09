@@ -1023,7 +1023,7 @@ if page == 'One Club':
         plot_values(result)
     else:
         st.write('Please upload a file')
-        uploaded_file1 = 'ag-shots-sample.csv'
+        uploaded_file1 = 'ags-shots-sample.csv'
         _displayShotData(uploaded_file1)
 else:
     st.write('Golf Multi')
