@@ -514,10 +514,10 @@ class Practice_Session():
         self.calc_df()
         
     def calc_df(self):
-        url = 'https://raw.githubusercontent.com/mpgentleman/GolfStats/master/Strokes_to_Hole.csv'
-        shots_input = pd.read_csv(url,sep=",")
+        #url = 'https://raw.githubusercontent.com/mpgentleman/GolfStats/master/Strokes_to_Hole.csv'
+        #shots_input = pd.read_csv(url,sep=",")
         #shots_input = pd.read_csv("folder/Strokes_to_Hole.csv")
-        avg_strokes = pd.read_csv('/app/folder/Avg_Strokes.csv')
+        avg_strokes = pd.read_csv('Avg_Strokes.csv')
         model, poly = create_model_poly(shots_input, 'Feet', 'Avg Shots',2)
         model2 = create_model(avg_strokes, 'Yards', 'Strokes_To_Hole')
         
