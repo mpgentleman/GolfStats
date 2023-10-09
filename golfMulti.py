@@ -937,10 +937,7 @@ if page == 'One Club':
             st.session_state.visibility = "visible"
             st.session_state.disabled = False
         
-        else:
-            st.write('Please upload a file')
-            uploaded_file1 = 'ag-shots-sample.csv'
-            _displayShotData(uploaded_file1)
+        
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
         #import os
@@ -1024,6 +1021,10 @@ if page == 'One Club':
         result = filter_row(IdealShot,'Club',option)
         st.subheader(' Ideal Zones. Green is the range from this session')
         plot_values(result)
+    else:
+        st.write('Please upload a file')
+        uploaded_file1 = 'ag-shots-sample.csv'
+        _displayShotData(uploaded_file1)
 else:
     st.write('Golf Multi')
     with st.sidebar:
